@@ -1,4 +1,4 @@
-module github.com/shadowdara/checkstaticfiles/generate
+module github.com/ShadowDara/checkstaticfiles/generate
 
 go 1.24.2
 
