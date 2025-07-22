@@ -24,7 +24,7 @@ paths:
 then you need to installer the generator module
 
 ```sh
-go install github.com/shadowdara/checkstaticfiles/generate
+go install github.com/shadowdara/checkstaticfiles/csf.generate@v0.0.5
 ```
 
 and run it with
@@ -57,7 +57,7 @@ then import in your code
 
 and run
 ```sh
-go get github.com/shadowdara/checkstaticfiles
+go get github.com/shadowdara/checkstaticfiles@v0.0.5
 ```
 
 and then run on your programm start to create the files
