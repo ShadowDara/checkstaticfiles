@@ -24,6 +24,10 @@ paths:
 then you need to installer the generator module
 
 ```sh
+go get github.com/shadowdara/checkstaticfiles/generate
+```
+
+```sh
 go install github.com/shadowdara/checkstaticfiles/generate
 ```
 
