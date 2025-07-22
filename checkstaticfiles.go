@@ -7,16 +7,10 @@ import (
 )
 
 func main() {
-	CheckFiles()
+	Checkfiles(CheckstaticfilesOutputJSONGz)
 }
 
-func CheckFiles() {
+func Checkfiles(data []byte) {
 	log.Println("Checking required files...")
-	core.Main()
-	log.Println("Checking finished successfully!")
-}
-
-func CreateFiles() {
-	log.Println("Creating required files...")
-	log.Println("Creating finished successfully!")
+	core.Main(data)
 }

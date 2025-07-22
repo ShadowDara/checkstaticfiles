@@ -2,9 +2,14 @@ package core
 
 import (
     "encoding/base64"
+    "encoding/json"
     "fmt"
     "os"
+    "log"
     "path/filepath"
+    "bytes"
+    "compress/gzip"
+    "io"
 )
 
 type EncodedFile struct {
@@ -12,17 +17,25 @@ type EncodedFile struct {
     Content string // base64-kodierter Inhalt
 }
 
-func Main() {
-    // Beispielhafte Daten (normalerweise kommen die aus deinem Array)
-    files := []EncodedFile{
-        {
-            Path:    "output/folder1/hello.txt",
-            Content: "SGVsbG8gV29ybGQh", // "Hello World!"
-        },
-        {
-            Path:    "output/folder2/readme.md",
-            Content: "IyBSZWFkbWUKVGhpcyBpcyBhIHRlc3Qh", // "# Readme\nThis is a test!"
-        },
+func Main(data []byte) {
+    // gzip-Daten entpacken
+    r, err := gzip.NewReader(bytes.NewReader(data))
+    if err != nil {
+        panic(fmt.Errorf("Fehler beim Erstellen des gzip Readers: %w", err))
+    }
+    defer r.Close()
+
+    // Entpackte Daten lesen
+    inhalt, err := io.ReadAll(r)
+    if err != nil {
+        panic(fmt.Errorf("Fehler beim Lesen der entpackten Daten: %w", err))
+    }
+
+    var files []EncodedFile
+    err = json.Unmarshal(inhalt, &files)
+    if err != nil {
+        fmt.Println("Fehler beim Parsen der JSON-Datei:", err)
+        return
     }
 
     for _, f := range files {
@@ -31,12 +44,14 @@ func Main() {
             fmt.Fprintf(os.Stderr, "Fehler beim Schreiben von %s: %v\n", f.Path, err)
         }
     }
+
+    log.Println("Finished file checking and creating!")
 }
 
 func decodeAndWriteFile(f EncodedFile) error {
     // Existenz prüfen
     if _, err := os.Stat(f.Path); err == nil {
-        fmt.Printf("Überspringe bestehende Datei: %s\n", f.Path)
+        log.Printf("Skipped existing file: %s\n", f.Path)
         return nil
     } else if !os.IsNotExist(err) {
         return fmt.Errorf("Fehler beim Prüfen der Datei: %w", err)
@@ -61,6 +76,6 @@ func decodeAndWriteFile(f EncodedFile) error {
         return fmt.Errorf("Fehler beim Schreiben der Datei: %w", err)
     }
 
-    fmt.Printf("Datei erstellt: %s\n", f.Path)
+    log.Printf("File created: %s\n", f.Path)
     return nil
 }
