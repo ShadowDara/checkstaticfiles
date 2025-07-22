@@ -1,2 +1,4 @@
+# Example Files for testing
 paths:
   - .gitignore
+  - q.exe

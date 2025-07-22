@@ -88,6 +88,11 @@ func Generate(inputPaths []string) {
 
 	log.Println("JSON Data: ")
 	fmt.Println(string(jsonData))
+
+	err = os.WriteFile("checkstaticfiles.output.json", jsonData, 0644)
+	if err != nil {
+    	panic(err)
+	}	
 }
 
 func encodeFile(path string) (EncodedFile, error) {
