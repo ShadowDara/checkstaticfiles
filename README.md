@@ -29,10 +29,12 @@ go install github.com/shadowdara/checkstaticfiles/generate
 
 and run it with
 ```sh
-csf.generate --package=main --output=checkstaticfiles.data.go --variable=CheckstaticfilesOutputJSONGz
+csf.generate
+  --package=main
+  --output=checkstaticfiles.data.go
+  --variable=CheckstaticfilesOutputJSONGz
 ```
 (*csf* should a shortcut for checkstaticfiles)
-
 
 - package is the name of you go package
 - output the name of the output file
@@ -42,7 +44,7 @@ add this to your git ignore to ignore the useless files
 ```sh
 checkstaticfiles.output.json
 checkstaticfiles.output.json.gz
-checkstaticfiles.data.go        # if you dont changed the name
+checkstaticfiles.data.go          # if you dont changed the name
 ```
 
 
@@ -50,7 +52,7 @@ checkstaticfiles.data.go        # if you dont changed the name
 
 then import in your code
 ```sh
-"github.com/shadowdara/checkstaticfiles"
+"shadowdara_checkstaticfiles"
 ```
 
 and run
