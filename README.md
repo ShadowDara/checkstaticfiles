@@ -27,12 +27,13 @@ then you need to installer the generator module
 go install github.com/shadowdara/checkstaticfiles/generate
 ```
 
-
-
-Run before your build or run command in the root directory:
+and run it with
 ```sh
-checkstaticfiles/generate
+checkstaticfiles.generate
 ```
+
+---
+
 
 ## Dev
 to generate the encoded files from the `checkstaticfiles.config.yaml` file
