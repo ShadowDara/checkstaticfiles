@@ -52,7 +52,7 @@ checkstaticfiles.data.go          # if you dont changed the name
 
 then import in your code
 ```sh
-"shadowdara_checkstaticfiles"
+"github.com/shadowdara/checkstaticfiles"
 ```
 
 and run
@@ -62,10 +62,15 @@ go get github.com/shadowdara/checkstaticfiles
 
 and then run on your programm start to create the files
 ```go
-Checkfiles(CheckstaticfilesOutputJSONGz)
+shadowdara_checkstaticfiles.Checkfiles(CheckstaticfilesOutputJSONGz)
 ```
 
 
 ## Disclaimer
 
 this module is develepment andNOT stable yet
+
+
+## TODO
+- [ ] add option for ignore paths
+- [ ] add option to add files via the extension `(*.html)`
