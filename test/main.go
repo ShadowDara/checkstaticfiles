@@ -1,7 +1,7 @@
 package main
 
 import(
-	"shadowdara_checkstaticfiles"
+	"github.com/shadowdara/checkstaticfiles"
 )
 
 func main() {
