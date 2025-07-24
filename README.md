@@ -24,12 +24,9 @@ paths:
 then you need to installer the generator module
 
 ```sh
-go get github.com/shadowdara/checkstaticfiles/csf.generate@v0.0.5
+go install github.com/shadowdara/csf.generate@latest
 ```
-
-```sh
-go install github.com/shadowdara/checkstaticfiles/csf.generate@v0.0.5
-```
+- [Source](https://github.com/shadowdara/csf.generate)
 
 and run it with
 ```sh
@@ -61,7 +58,7 @@ then import in your code
 
 and run
 ```sh
-go get github.com/shadowdara/checkstaticfiles@v0.0.5
+go get github.com/shadowdara/checkstaticfiles@latest
 ```
 
 and then run on your programm start to create the files
@@ -72,9 +69,10 @@ shadowdara_checkstaticfiles.Checkfiles(CheckstaticfilesOutputJSONGz)
 
 ## Disclaimer
 
-this module is develepment andNOT stable yet
+this module is develepment and NOT stable yet
 
 
 ## TODO
 - [ ] add option for ignore paths
 - [ ] add option to add files via the extension `(*.html)`
+- [ ] compress the raw json data (no space and tabs)
