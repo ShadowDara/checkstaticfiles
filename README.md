@@ -26,7 +26,7 @@ then you need to installer the generator module
 ```sh
 go install github.com/shadowdara/csf.generate@latest
 ```
-- [Source](https://github.com/shadowdara/csf.generate)
+- [Source here](https://github.com/shadowdara/csf.generate) *(i moved it to another repository)*
 
 and run it with
 ```sh
@@ -71,8 +71,7 @@ shadowdara_checkstaticfiles.Checkfiles(CheckstaticfilesOutputJSONGz)
 
 this module is develepment and NOT stable yet
 
-
 ## TODO
 - [ ] add option for ignore paths
 - [ ] add option to add files via the extension `(*.html)`
-- [ ] compress the raw json data (no space and tabs)
+- [x] compress the raw json data (no space and tabs)
