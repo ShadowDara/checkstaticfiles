@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.0.6.1
+
+- some error messages were still not in english
+- added a little bit more clarity to the terminal output
+
 ## v0.0.6
 
 - the json writer from **csf.generate** writes the json file
