@@ -6,6 +6,7 @@ other) by encoding them and adding the encoded value to the binary.
 The binary will then check on startup if these files are existing, if
 not the executable will create them.
 
+See [Changelog](/CHANGELOG.md) to see the other versions
 
 ## Start
 
@@ -16,10 +17,13 @@ You can add Folders and Files to `paths`
 
 ```yaml
 # Example Content
+contentmode: false
 paths:
   - .gitignore
   - q.exe
 ```
+
+See [Additional Settings](#aditional-settings)
 
 then you need to installer the generator module
 
@@ -30,10 +34,7 @@ go install github.com/shadowdara/csf.generate@latest
 
 and run it with
 ```sh
-csf.generate
-  --package=main
-  --output=checkstaticfiles.data.go
-  --variable=CheckstaticfilesOutputJSONGz
+csf.generate --package=main --output=checkstaticfiles.data.go --variable=CheckstaticfilesOutputJSONGz
 ```
 (*csf* should a shortcut for checkstaticfiles)
 
@@ -43,9 +44,12 @@ csf.generate
 
 add this to your git ignore to ignore the useless files
 ```sh
+# checkstaticfiles
+# https://github.com/ShadowDara/checkstaticfiles
 checkstaticfiles.output.json
 checkstaticfiles.output.json.gz
-checkstaticfiles.data.go          # if you dont changed the name
+# or another file if you changed the name
+checkstaticfiles.data.go
 ```
 
 
@@ -63,15 +67,23 @@ go get github.com/shadowdara/checkstaticfiles@latest
 
 and then run on your programm start to create the files
 ```go
-shadowdara_checkstaticfiles.Checkfiles(CheckstaticfilesOutputJSONGz)
+shadowdara_checkstaticfiles.Checkfiles(CheckstaticfilesOutputJSONGz, Chechstaticfiles_settings)
 ```
 
+## Aditional Settings
+
+### Content Mode
+a feature which allows to check the content of the files too, so that
+users cant change it and execute the programm with the changed files then
+
+to configure, add to the `checkstaticfiles.config.yaml`, but this will result in longer file
+cheking time, keep that in mind
+
+```yaml
+contentmode: false
+# or true
+```
 
 ## Disclaimer
 
-this module is develepment and NOT stable yet
-
-## TODO
-- [ ] add option for ignore paths
-- [ ] add option to add files via the extension `(*.html)`
-- [x] compress the raw json data (no space and tabs)
+this module is develepment and NOT stable yet, but it *should* work

@@ -6,7 +6,7 @@ import (
 	"github.com/shadowdara/checkstaticfiles/core"
 )
 
-func Checkfiles(data []byte) {
+func Checkfiles(data []byte, settings int) {
 	log.Println("Checking required files...")
-	core.Main(data)
+	core.Main(data, settings)
 }

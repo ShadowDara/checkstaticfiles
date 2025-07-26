@@ -17,7 +17,17 @@ type EncodedFile struct {
     Content string // base64-kodierter Inhalt
 }
 
-func Main(data []byte) {
+var ExeDir string
+
+func Main(data []byte, settings int) {
+    // Pfad zum Binary (ausführbare Datei) ermitteln
+    exePath, err := os.Executable()
+    if err != nil {
+        fmt.Errorf("unable to get executable path: %w", err)
+    }
+
+    ExeDir = filepath.Dir(exePath)
+
     // gzip-Daten entpacken
     r, err := gzip.NewReader(bytes.NewReader(data))
     if err != nil {
@@ -39,7 +49,7 @@ func Main(data []byte) {
     }
 
     for _, f := range files {
-        err := decodeAndWriteFile(f)
+        err := decodeAndWriteFile(f, settings)
         if err != nil {
             fmt.Fprintf(os.Stderr, "error while writing %s: %v\n", f.Path, err)
         }
@@ -48,11 +58,21 @@ func Main(data []byte) {
     log.Println("Finished file checking and creating!")
 }
 
-func decodeAndWriteFile(f EncodedFile) error {
+func decodeAndWriteFile(f EncodedFile, settings int) error {
+    // Zielpfad im Binary-Verzeichnis
+    fullPath := filepath.Join(ExeDir, f.Path)
+
+    var exist bool = false
+
     // Existenz prüfen
-    if _, err := os.Stat(f.Path); err == nil {
-        log.Printf("Skipped existing file: %s\n", f.Path)
-        return nil
+    _, err := os.Stat(fullPath);
+    if err == nil {
+        if (checksettings(settings, 0)) {
+            exist = true
+        } else {
+            log.Printf("Skipped existing file: %s\n", fullPath)
+            return nil
+        }
     } else if !os.IsNotExist(err) {
         return fmt.Errorf("error while checking file: %w", err)
     }
@@ -63,19 +83,37 @@ func decodeAndWriteFile(f EncodedFile) error {
         return fmt.Errorf("error while decoding: %w", err)
     }
 
-    // Ordnerstruktur sicherstellen
-    dir := filepath.Dir(f.Path)
+    // Ordnerstruktur erstellen
+    dir := filepath.Dir(fullPath)
     err = os.MkdirAll(dir, 0755)
     if err != nil {
         return fmt.Errorf("error while creating folders: %w", err)
     }
 
+    if (exist) {
+        data, err := os.ReadFile(fullPath)
+        if err != nil {
+            return fmt.Errorf("error reading file: %w", err)
+        }
+
+        if bytes.Equal(data, decoded) {
+            if bytes.Equal(data, decoded) {
+                log.Printf("Content checked, skipping: %s\n", fullPath)
+                return nil
+            }
+        }
+    }
+
     // Datei schreiben
-    err = os.WriteFile(f.Path, decoded, 0644)
+    err = os.WriteFile(fullPath, decoded, 0644)
     if err != nil {
         return fmt.Errorf("error while writing file: %w", err)
     }
 
-    log.Printf("File created: %s\n", f.Path)
+    log.Printf("File created: %s\n", fullPath)
     return nil
+}
+
+func checksettings(settings int, bit int) bool {
+    return (settings & (1 << bit)) != 0
 }

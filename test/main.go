@@ -5,5 +5,5 @@ import(
 )
 
 func main() {
-	shadowdara_checkstaticfiles.Checkfiles(CheckstaticfilesOutputJSONGz)
+	shadowdara_checkstaticfiles.Checkfiles(CheckstaticfilesOutputJSONGz, Chechstaticfiles_settings)
 }
